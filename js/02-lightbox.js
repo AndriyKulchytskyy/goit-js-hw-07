@@ -2,30 +2,16 @@ import { galleryItems } from "./gallery-items.js";
 // Change code below this line
 
 // 1) Создание и рендер разметки по массиву данных galleryItems и предоставленному шаблону элемента галереи.
+const makeGalleryMarkup = ({ preview, original, description }) =>
+  `<div class="gallery__item"><a class="gallery__link" href="${original}"><img class="gallery__image" src="${preview}" data-sourse="${original}"alt="${description}"></a></div>`;
 
 const galleryRef = document.querySelector(".gallery");
 
-const listItems = [];
+const galleryMarkup = galleryItems.reduce((acc, el) => {
+  return (acc += makeGalleryMarkup(el));
+}, "");
 
-for (let i = 0; i < galleryItems.length; i += 1) {
-  const listItem = document.createElement("li");
-
-  const galleryItem = document.createElement("a");
-  galleryItem.classList.add("galery__item");
-  galleryItem.href = galleryItems[i].original;
-
-  const galleryImage = document.createElement("img");
-  galleryImage.classList.add("gallery__image");
-  galleryImage.src = galleryItems[i].preview;
-  galleryImage.alt = galleryItems[i].description;
-
-  galleryItem.append(galleryImage);
-  listItem.append(galleryItem);
-
-  listItems.push(listItem);
-}
-
-galleryRef.append(...listItems);
+galleryRef.innerHTML = galleryMarkup;
 
 // ---------------------------------------------------------------
 
